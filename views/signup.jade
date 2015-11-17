@@ -1,0 +1,27 @@
+extends layout
+
+block nav-items
+   +nav_item('/') Home
+   +nav_item('/about') About
+   +nav_item('/login') Login
+   +nav_item('#','active') Sign Up
+
+block append content
+   .page-header: h1 Create an account
+   .row: .col-md-8: .well
+      form(id='signup' method='post').form-horizontal
+         +input('text','inputFname','fname','Enter your first name','First Name','8')
+         +input('text','inputLname','lname','Enter your last name','Last Name','8')
+         +input('email','inputEmail','email','Enter your email address','Email Address','8')
+         +input('text','inputUsername','username','Enter a username','Username','8')
+         +input('password','inputPassword','password','Enter a password','Password','8')
+         +input('password','inputVerifyPassword','verified_password','Re-enter password','Verify Password','8')
+         +input('tel','inputPhoneNumber','phone','Enter mobile number','Mobile Number','8')
+         .form-group: .col-md-8.col-md-offset-2
+            +submit('Register','primary')
+         input(type="hidden", name="_csrf", value="#{csrf}")
+
+block append scripts
+   script(src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js")
+   script(src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/additional-methods.min.js")
+   script(src="/javascripts/signupValidation.js")

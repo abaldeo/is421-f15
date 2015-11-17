@@ -1,0 +1,23 @@
+extends layout
+block append nav-items
+   +nav_item('/') Home
+   +nav_item('/about') About
+   +nav_item('#','active') Login
+   +nav_item('/signup') Sign Up
+
+block append content
+   .page-header: h1 Login to your account
+   .row: .col-md-6: .well
+      form(id='login' method='post').form-horizontal
+         +input('text','inputUsername','username','username','Username',10)
+         .col-md-offset-2: span.help-block: a(href='/forgot-username') Forgot Username?
+         +input('password','inputPassword','password','password','Password',10)
+         .col-md-offset-2: span.help-block: a(href='/forgot-password') Forgot Password?
+         .form-group: .col-md-10.col-md-offset-2
+            +submit('Login','primary')
+            +checkbox-inline('Remember Me')
+         span.help-block: a(href='/resend_confirmation') Resend Confirmation Email?
+         input(type="hidden", name="_csrf", value="#{csrf}")
+block append scripts
+   script(src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js")
+   script(src="/javascripts/loginValidation.js")

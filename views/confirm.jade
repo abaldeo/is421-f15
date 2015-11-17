@@ -1,0 +1,35 @@
+extends layout
+
+block nav-items
+   +nav_item('/') Home
+   +nav_item('/about') About
+   +nav_item('/login') Login
+
+block append content
+   if page.type == 'account_creation'
+      - var header = 'Account Created!'
+      - var text = 'Thank you for creating an account with us. Please check your email for an activation link.'
+   else if  page.type == 'account_confirmed'
+      - var header = 'Account Confirmed!'
+      - var text = 'Your account is now active. Please log in.'
+   else if page.type  == 'already_confirmed'
+      - var header = 'Account Already Activated'
+      - var text = 'This account has already been activated.'
+   else if page.type == 'confirm_failed'
+      - var header = 'Account Activation Failed!'
+      - var text = 'Could not activate account. Please try again later.'
+   else if page.type == 'confirm_expired'
+      - var header = 'Account Confirmation Link Expired!'
+      - var text = 'This link has expired and is no longer valid. Please request a new one.'
+   else if page.type == 'resend_confirm'
+      - var header = 'Confirmation Email Sent!'
+      - var text = 'We have resent you a confirmation email to activate your account.'
+   else if page.type == 'reset'
+      - var header = 'Password Reset Request Made!'
+      - var text = 'Instructions to reset your password will be sent to your email shortly. You will have one hour before the link to request your password expires.';
+   else if page.type == 'invalid_link'
+      - var header = 'Cannot process request!'
+      - var text = 'This link is invalid.'
+   .jumbotron
+      .page-header: h1 #{header}
+         p #{text}

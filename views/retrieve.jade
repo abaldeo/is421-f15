@@ -1,0 +1,51 @@
+extends layout
+block nav-items
+   +nav_item('/') Home
+   +nav_item('/about') About
+   +nav_item('login') Login
+   +nav_item('/signup') Sign Up
+
+block append content
+   if user
+      .jumbotron
+         .page-header: h1 Username Found!
+         p.lead Your username is
+            strong
+               mark #{user.username}
+
+   else
+      if username
+         - var header='Retrieve Username'
+         - var id='inputEmail'
+         - var name='email'
+         - var placeholder='Enter your email address'
+         - var label = 'Email Address'
+         - var formID = 'userForm'
+      else if password
+         - var header='Reset Password'
+         - var id='inputUsername'
+         - var name='username'
+         - var placeholder='Enter your username'
+         - var label = 'Username'
+         - var formID = 'passForm'
+      else if email
+         - var header = 'Resend Confirmation Email'
+         - var id='inputEmail'
+         - var name='email'
+         - var placeholder='Enter your email address'
+         - var label = 'Email Address'
+         - var formID = 'userForm'
+
+      .page-header: h1 #{header}
+      .row: .col-md-4: .well
+         form(id="#{formID}" method='post').form-horizontal
+            .form-group
+               label(class='text-center',for="#{id}") #{label}
+               +input-simple('text',id,name,placeholder)
+            .form-group: .col-md-2
+               +submit('Submit','primary')
+            input(type="hidden", name="_csrf", value="#{csrf}")
+
+      block append scripts
+         script(src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js")
+         script(src="/javascripts/retrieveValidation.js")

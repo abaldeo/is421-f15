@@ -1,0 +1,33 @@
+extends layout
+block nav-items
+   +nav_item('/dashboard') Dashboard
+   +nav_item('/profile') Profile
+   +nav_item('#','active') Admin
+   +nav_item('/logout') Log Out
+
+block append content
+   .page-header: h1 List of User Accounts
+   -var table_head = ['','#','Name','Username','Email','Role','Active','Locked?','']
+   form(method='post')
+      +table-bordered(table_head,users)
+      .form-group: .col-md-3.col-md-offset-3
+         label(for='action') Select an Action
+         select(id='action',name='action').form-control
+            option(value=0) Grant/Revoke Admin
+            option(value=1) Lock/Unlock Account
+            option(value=2) Delete Account
+      .form-group
+         button(class='btn btn-primary',id='admin-submit',type="submit") Submit Changes
+
+block append body
+   if masquerade == true
+      .navbar.navbar-fixed-bottom#masquerade
+         .text-center
+            ul.list-inline
+               li
+                  +icon('user')
+               li
+                  p You are masquerading as #{user.fname}
+               li
+                  form(method='post',action='/switchback')
+                     button.btn(class="btn-success btn-sm",type="submit") Switch Back

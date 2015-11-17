@@ -1,0 +1,20 @@
+extends layout
+block nav-items
+    +nav_item('/') Home
+    +nav_item('/about') About
+    +nav_item('/login') Login
+
+block append content
+  if confirm
+     .jumbotron: .page-header: h1 Your password has been reset!
+  else
+    .page-header: h1 Reset your password
+    .row: .col-md-6: .well
+       form(id="reset" method='post').form-horizontal
+          +input('password','inputNewPassword','password','Enter a new password','New Password',10)
+          +input('password','confirmNewPassword','confirm_password','Re-enter new password','Verify Password',10)
+          .form-group: .col-md-10.col-md-offset-2
+             +submit('Update Password','primary')
+block append scripts
+    script(src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js")
+    script(src="/javascripts/resetValidation.js")

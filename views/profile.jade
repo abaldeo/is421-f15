@@ -1,0 +1,42 @@
+extends layout
+block nav-items
+    +nav_item('/dashboard') Dashboard
+    +nav_item('#','active') Profile
+    if user.is_admin === true
+        +nav_item('/admin') Admin
+    +nav_item('/logout') Log Out
+
+block append content
+  .page-header: h1 Profile
+  .row: .col-md-8: .well
+       form(id='profile' method='post').form-horizontal
+           fieldset
+            legend Personal Info
+           +input('text','inputFname','fname','','First Name','8', user.fname)
+           +input('text','inputLname','lname','','Last Name','8', user.lname)
+           +input('email','inputEmail','email','','Email Address','8', user.email)
+           +input('text','inputUsername','username','','Username','8', user.username)
+           +input('password','inputCurrentPassword','current_password','','Current Password','8')
+           +input('password','inputPassword','password','','New Password','8')
+           +input('password','inputVerifyPassword','verified_password','','Verify New Password','8')
+           +input('tel','inputPhoneNumber','phone','','Mobile Number','8', user.phone)
+           .form-group
+                .col-md-offset-2
+                 +submit('Submit changes','primary')
+                 input.btn(class="btn-default",type="reset",value="Cancel Changes")
+block append body
+    if masquerade == true
+        .navbar.navbar-fixed-bottom#masquerade
+            .text-center
+                ul.list-inline
+                    li
+                        +icon('user')
+                    li
+                        p You are masquerading as #{user.fname}
+                    li
+                        form(method='post',action='/switchback')
+                            button.btn(class="btn-success btn-sm",type="submit") Switch Back
+block append scripts
+    script(src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js")
+    script(src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/additional-methods.min.js")
+    script(src="/javascripts/profileValidation.js")

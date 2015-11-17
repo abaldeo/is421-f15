@@ -1,0 +1,25 @@
+extends jade-bootstrap/_bootstrap
+
+//-var title='NJIT UMS'
+
+block prepend styles
+  +bootswatch('flatly')
+
+block append nav
+  +navbar-fixed('User Management System','navbar')
+    block nav-items
+
+block append content
+  if messages.error
+    +alert-i-danger(messages.error)
+  else if messages.warn
+    +alert-i-warning(messages.warn)
+  else if messages.success
+    +alert-ix-success(messages.success)
+  else if messages.info
+    +alert-ix-info(messages.info)
+
+
+block append footer
+   .navbar.navbar-fixed-bottom
+    p.text-muted @ 2015 Avinash Baldeo
